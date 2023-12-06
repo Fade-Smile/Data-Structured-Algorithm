@@ -6,7 +6,7 @@
 @Author  :Sunshine
 @Date    :06/12/2023 22:20 
 '''
-
+# source code: github.com/python/cpython/blob/3.8/Objects/listobject.c
 lst = []
 ''' 
 列表对象
