@@ -28,7 +28,7 @@ class SingleLinkList(object):
 
     def is_empty(self):
         """ 判断链表是否为空 """
-        return self.head == None
+        return self.head == 0
 
     def length(self):
         """ 返回链表的长度"""
@@ -82,19 +82,19 @@ class SingleLinkList(object):
         if pos <= 0:
             self.add(data)
         # 若指定位置超过链表尾部，则执行尾部插入
-        elif pos > (self.length()-1):
+        elif pos > (self.length() - 1):
             self.append(data)
         else:
             # 正常情况
             # 第一步 新建一个节点node
             node = Node(data)
-            count = 0
             # 第二步 找到链表中索引为pos-1的节点
-            # # pre用来指向指定位置pos的前一个位置pos-1，初始从头节点开始移动到指定位置
-            pre = self.head
-            while count < (pos-1):
-                count += 1
-                pre = pre.next
+            pre = self.head  # pre 变量用于存储索引为 pos-1 的节点
+            while pos - 1:  # 这个循环用于找到索引为 pos-1 的节点
+                # [在 while 循环中，当表达式的结果为非零值或者是 True 时，循环会继续执行。当表达式的结果为零值或者是 False 时，循环会停止执行，程序继续往下执行。]
+                pre = pre.next  # 将 pre 指向下一个节点，直到找到索引为 pos-1 的节点
+                pos -= 1  # 不断减少 pos 的值，直到找到索引为 pos-1 的节点
+
             # 第三步 让node的next指向索引为pos的节点
             node.next = pre.next
             # 第四步 让索引为pos-1的节点的next指向node
@@ -103,8 +103,49 @@ class SingleLinkList(object):
             self._length += 1
 
     def remove(self, data):
-        """ 删除链表中第一个值为data的节点"""
-        pass
+        """ 这段代码实现了在单向链表中删除第一个匹配给定值的节点的功能，如果存在匹配的节点则删除，否则不做任何操作。"""
+        cur = self.head
+        pre_node = None
+        while cur:  # 遍历整个链表，直到找到需要删除的节点或者到达链表末尾 (当cur为None时，表示已经遍历完整个链表)
+            if cur.data == data:  # 检查当前节点cur的数据是否等于目标值data。
+                # 如果前驱结点为空，说明我们要删除的节点是第一个节点
+                if not pre_node:  # 判断是否为链表的第一个节点（即没有前驱节点）。如果 pre_node 为空（None），说明要删除的节点是链表的头节点。
+                    self.head = cur.next   # 这种情况下，将链表的头节点指向当前节点的下一个节点 cur.next，从而删除了头节点。
+                else:  # 如果不是头节点，即 pre_node 不为空，
+                    pre_node.ext = cur.next  # 将前驱节点 pre_node 的 next 指针指向当前节点的下一个节点 cur.next，以跳过当前节点，从而删除了当前节点。
+                self._length -= 1
+                return 0
+            pre_node = cur
+            cur = cur.next
+        return -1   # 如果遍历完整个链表都没有找到值为 data 的节点，那么函数返回 -1，表示未找到对应节点，没有执行删除操作
+
+    def pop(self, pos):
+        """ 指定位置删除节点 """
+        
+        if pos < 0 or self._length == 0:
+            raise IndexError("索引超出范围")
+        if pos == 0:
+            pop_node = self.head
+            self.head = self.head.next
+            self._length -= 1
+            return pop_node.data
+
+        cur = self.head
+        pre_node = None
+        while pos > 0 and cur:
+            pre_node = cur
+            cur = cur.next
+            pos -= 1
+
+        if pos == 0 and cur:
+            pop_node = cur
+            pre_node.next = cur.next
+            self._length -= 1
+            return pop_node.data
+        else:
+            raise("索引超出范围")
+
+
 
     def modify(self, pos, data):
         """ 修改链表中指定位置的节点的值 """
@@ -126,3 +167,10 @@ if __name__ == '__main__':
     l1.append(4)
     print(l1.head.data, l1.length())
     print(l1.nodes_list())
+    l1.insert(7, 7)
+    print(l1.nodes_list())
+
+    print()
+    l1.remove(7)
+    print(l1.nodes_list())
+    print(l1.length())
