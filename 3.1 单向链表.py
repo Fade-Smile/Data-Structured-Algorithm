@@ -105,14 +105,14 @@ class SingleLinkList(object):
     def remove(self, data):
         """ 这段代码实现了在单向链表中删除第一个匹配给定值的节点的功能，如果存在匹配的节点则删除，否则不做任何操作。"""
         cur = self.head
-        pre_node = None
+        pre_node = None  # 要删除的节点的前驱结点
         while cur:  # 遍历整个链表，直到找到需要删除的节点或者到达链表末尾 (当cur为None时，表示已经遍历完整个链表)
             if cur.data == data:  # 检查当前节点cur的数据是否等于目标值data。
                 # 如果前驱结点为空，说明我们要删除的节点是第一个节点
                 if not pre_node:  # 判断是否为链表的第一个节点（即没有前驱节点）。如果 pre_node 为空（None），说明要删除的节点是链表的头节点。
                     self.head = cur.next   # 这种情况下，将链表的头节点指向当前节点的下一个节点 cur.next，从而删除了头节点。
                 else:  # 如果不是头节点，即 pre_node 不为空，
-                    pre_node.ext = cur.next  # 将前驱节点 pre_node 的 next 指针指向当前节点的下一个节点 cur.next，以跳过当前节点，从而删除了当前节点。
+                    pre_node.next = cur.next  # 将前驱节点 pre_node 的 next 指针指向当前节点的下一个节点 cur.next，以跳过当前节点，从而删除了当前节点。
                 self._length -= 1
                 return 0
             pre_node = cur
@@ -121,28 +121,28 @@ class SingleLinkList(object):
 
     def pop(self, pos):
         """ 指定位置删除节点 """
-        
-        if pos < 0 or self._length == 0:
+
+        if pos < 0 or self._length == 0:  # 检查索引有效性
             raise IndexError("索引超出范围")
-        if pos == 0:
+        if pos == 0:  # 若要删除头节点
             pop_node = self.head
-            self.head = self.head.next
+            self.head = self.head.next   # 更新链表的头节点为当前头节点的下一个节点
             self._length -= 1
             return pop_node.data
 
         cur = self.head
         pre_node = None
-        while pos > 0 and cur:
+        while pos > 0 and cur:  # 如果要删除的位置不是头节点，使用 cur 和 pre_node 指针来遍历链表，直到找到要删除位置的节点。
             pre_node = cur
             cur = cur.next
             pos -= 1
 
-        if pos == 0 and cur:
-            pop_node = cur
-            pre_node.next = cur.next
+        if pos == 0 and cur:  # 是否找到要删除的位置 pos，并且 cur 不为空
+            pop_node = cur  # 找到目标位置后，将目标节点从链表中取出
+            pre_node.next = cur.next    # 并将前一个节点 pre_node 的 next 指针指向目标节点的下一个节点
             self._length -= 1
             return pop_node.data
-        else:
+        else:    # 如果给定的索引超出了链表范围或者无法找到目标节点，则会引发 IndexError 异常，指示索引超出范围。
             raise("索引超出范围")
 
 
@@ -159,18 +159,31 @@ class SingleLinkList(object):
 if __name__ == '__main__':
     l1 = SingleLinkList()  # 新建一个链表类
     print(l1.head, l1.length())
+
+    print('**************Test add()**************')
     l1.add(1)
     print(l1.head.data, l1.length())
     l1.add(3)
     print(l1.head.data, l1.length())
     print(l1.nodes_list())
+
+    print('**************Test append()**************')
     l1.append(4)
     print(l1.head.data, l1.length())
     print(l1.nodes_list())
+
+    print('**************Test insert()**************')
     l1.insert(7, 7)
     print(l1.nodes_list())
 
-    print()
+    print('**************Test remove()**************')
     l1.remove(7)
     print(l1.nodes_list())
     print(l1.length())
+
+    print('**************Test pop()**************')
+    print(l1.nodes_list())
+    l1.pop(2)
+    print(l1.nodes_list())
+    print(l1.length())
+
