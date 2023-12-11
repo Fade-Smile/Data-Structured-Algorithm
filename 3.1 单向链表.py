@@ -145,15 +145,25 @@ class SingleLinkList(object):
         else:    # 如果给定的索引超出了链表范围或者无法找到目标节点，则会引发 IndexError 异常，指示索引超出范围。
             raise("索引超出范围")
 
-
-
     def modify(self, pos, data):
         """ 修改链表中指定位置的节点的值 """
-        pass
+        if 0 <= pos < self._length:
+            cur = self.head
+            while pos:
+                cur = cur.head
+                pos -= 1
+            cur.data = data
+        else:
+            print('你输入的不符合范围')
 
     def search(self, data):
         """ 查找链表中是否有节点的值为data """
-        pass
+        cur = self.head
+        while cur:
+            if cur.data == data:
+                return True
+            cur = cur.next
+        return False
 
 
 if __name__ == '__main__':
@@ -186,4 +196,13 @@ if __name__ == '__main__':
     l1.pop(2)
     print(l1.nodes_list())
     print(l1.length())
+
+    print('**************Test modify()**************')
+    print(l1.nodes_list())
+    l1.modify(0, 21)
+    print(l1.nodes_list())
+
+    print('**************Test search()**************')
+    print(l1.search(21))
+    print(l1.search(20))
 
