@@ -24,7 +24,7 @@ class SingleLinkList(object):
 
     def __init__(self):
         self.head = None  # 链表的头节点的地址
-        self._length = 0  # 链表的长度, 表表的元素个数
+        self._length = 0  # 链表的长度, 链表的元素个数
 
     def is_empty(self):
         """ 判断链表是否为空 """
