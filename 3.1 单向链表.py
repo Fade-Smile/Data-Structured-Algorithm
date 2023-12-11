@@ -28,7 +28,7 @@ class SingleLinkList(object):
 
     def is_empty(self):
         """ 判断链表是否为空 """
-        return self.head == 0
+        return self._length == 0
 
     def length(self):
         """ 返回链表的长度"""
