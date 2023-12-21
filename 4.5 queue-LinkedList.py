@@ -22,15 +22,15 @@ class Queue:
         self.rear = None  # 队列的队尾
         self._length = 0  # 队列的长度
 
-    # 判断该是否为空
+    # 判断该是否为空  时间复杂度O(1)
     def isEmpty(self):
         return self._length == 0
 
-    # 判断长度
+    # 判断长度    时间复杂度O(1)
     def length(self):
         return self._length
 
-    # 队尾添加元素
+    # 队尾添加元素   时间复杂度O(1)
     def push(self, item):
         node = Node(item)
         # 如果队列为空
@@ -42,7 +42,7 @@ class Queue:
             self.rear = node
         self._length += 1
 
-    # 抛出队首
+    # 抛出队首  时间复杂度O(1)
     def pop(self):
         if self.isEmpty():
             raise ValueError('队列是空的')
@@ -51,7 +51,7 @@ class Queue:
         self._length -= 1
         return value
 
-    # 获取队首的值
+    # 获取队首的值  时间复杂度O(1)
     def peek(self):
         if self.isEmpty():
             raise ValueError('列表为空')
