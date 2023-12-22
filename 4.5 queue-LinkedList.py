@@ -17,10 +17,11 @@ class Node:
 
 
 class Queue:
-    def __init__(self):
+    def __init__(self, size):
         self.head = None  # 队列的队头
         self.rear = None  # 队列的队尾
         self._length = 0  # 队列的长度
+        self.size = size  # 队列的最大长度
 
     # 判断该是否为空  时间复杂度O(1)
     def isEmpty(self):
@@ -32,6 +33,9 @@ class Queue:
 
     # 队尾添加元素   时间复杂度O(1)
     def push(self, item):
+        # 判断队列是否已满
+        if self.length() == self.size:
+            raise ValueError('队列已满')
         node = Node(item)
         # 如果队列为空
         if self.isEmpty():
